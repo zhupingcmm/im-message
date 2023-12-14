@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @Slf4j
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.ocbc.project")
 @MapperScan("com.ocbc.project.cs.mapper")
 public class Application {
     public static void main(String[] args) {
