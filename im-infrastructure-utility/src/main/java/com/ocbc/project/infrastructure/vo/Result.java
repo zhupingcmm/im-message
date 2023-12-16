@@ -51,16 +51,16 @@ public class Result <T>{
     }
 
 
-    public static <T> Result success(T data) {
-        return new Result(MessageCode.SUCCESS.getStatus(), MessageCode.SUCCESS.getMessage(), data, MDC.get(TRACE_LOG_ID));
+    public static <T> Result<T> success(T data) {
+        return new Result<T>(MessageCode.SUCCESS.getStatus(), MessageCode.SUCCESS.getMessage(), data, MDC.get(TRACE_LOG_ID));
     }
 
-    public static Result error(int code, String message) {
-        return new Result(code, message, MDC.get(TRACE_LOG_ID));
+    public static <T> Result<T> error(int code, String message) {
+        return new Result<T>(code, message, MDC.get(TRACE_LOG_ID));
     }
 
-    public static Result error(String message) {
-        return new Result(MessageCode.SYSTEM_ERROR.getStatus(), message, MDC.get(TRACE_LOG_ID));
+    public static <T> Result<T> error(String message) {
+        return new Result<T>(MessageCode.SYSTEM_ERROR.getStatus(), message, MDC.get(TRACE_LOG_ID));
     }
 
 

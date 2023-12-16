@@ -13,6 +13,7 @@
         <module>im-dependency</module>
         <module>customer-system</module>
         <module>im-infrastructure-utility</module>
+        <module>outsouring-system</module>
     </modules>
 
     <properties>

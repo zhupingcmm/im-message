@@ -1,0 +1,14 @@
+server:
+  port: 10001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.61.3:3306/customer_beijing
+    username: root
+    password: 1234
+
+logging:
+  level:
+    com.customer.beijing: debug
+
