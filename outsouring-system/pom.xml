@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>outsouring-system-beijing</module>
+        <module>outsouring-system-hangzhou</module>
+        <module>outsouring-system-shanghai</module>
     </modules>
 
 </project>
