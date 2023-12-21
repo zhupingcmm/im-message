@@ -22,6 +22,8 @@ public interface ICustomerStaffService {
 
     Boolean deleteCustomerStaffById(Long staffId);
 
+    Boolean createCustomerStaff(List<CustomerStaff> customerStaffs);
+
     //PULL模式：获取OutsourcingSystem中的CustomerStaff
-    void syncOutsourcingCustomerStaffsBySystemId(Long systemId);
+    void syncOutsourcingCustomerStaffsBySystemId(String systemId);
 }

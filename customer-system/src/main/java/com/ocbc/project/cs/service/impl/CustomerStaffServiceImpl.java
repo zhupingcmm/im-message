@@ -6,17 +6,29 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ocbc.project.cs.entity.CustomerStaff;
+import com.ocbc.project.cs.entity.tenant.OutsourcingSystem;
 import com.ocbc.project.cs.mapper.CustomerStaffMapper;
 import com.ocbc.project.cs.service.ICustomerStaffService;
+import com.ocbc.project.cs.service.IOutsourcingSystemService;
+import com.ocbc.project.cs.servicebus.endpoint.CustomerStaffEndpoint;
 import com.ocbc.project.infrastructure.exception.BizException;
 import com.ocbc.project.infrastructure.page.PageObject;
+import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CustomerStaffServiceImpl extends ServiceImpl<CustomerStaffMapper, CustomerStaff> implements ICustomerStaffService {
+
+    private final IOutsourcingSystemService outsourcingSystemService;
+
+    private final CustomerStaffEndpoint customerStaffEndpoint;
+
+
     @Override
     public PageObject<CustomerStaff> findCustomerStaffs(Long pageSize, Long pageIndex) {
         return getCustomerStaffPageObject(null, pageSize, pageIndex);
@@ -70,7 +82,14 @@ public class CustomerStaffServiceImpl extends ServiceImpl<CustomerStaffMapper, C
     }
 
     @Override
-    public void syncOutsourcingCustomerStaffsBySystemId(Long systemId) {
+    @Transactional
+    public Boolean createCustomerStaff(List<CustomerStaff> customerStaffs) {
+        return this.saveBatch(customerStaffs);
+    }
 
+    @Override
+    public void syncOutsourcingCustomerStaffsBySystemId(String systemId) {
+      OutsourcingSystem outsourcingSystem =  outsourcingSystemService.findBySystemId(systemId);
+      customerStaffEndpoint.fetchCustomerStaffs(outsourcingSystem);
     }
 }

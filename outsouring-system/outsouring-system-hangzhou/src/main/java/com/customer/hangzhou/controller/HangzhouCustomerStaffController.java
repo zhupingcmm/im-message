@@ -6,10 +6,12 @@ import com.customer.hangzhou.controller.vo.resp.HangzhouCustomerStaffRespVO;
 import com.customer.hangzhou.converter.HangzhouCustomerStaffConverter;
 import com.customer.hangzhou.entity.HangzhouCustomerStaff;
 import com.customer.hangzhou.service.HangzhouCustomerStaffService;
+import com.ocbc.project.infrastructure.utils.DateUtils;
 import com.ocbc.project.infrastructure.vo.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,21 +46,31 @@ public class HangzhouCustomerStaffController {
 
     @GetMapping("/")
     public Result<Page<HangzhouCustomerStaff>> getAllCustomerStaffs(@RequestParam(value = "nickname", required = false) String nickname,
+                                                                    @RequestParam ("updatedTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedTime,
                                                                           @RequestParam(value = "page", defaultValue = "0") int page,
                                                                           @RequestParam(value = "size", defaultValue = "10") int size
                                                                           ) {
-
-        Page<HangzhouCustomerStaff> customerStaffs = customerStaffService.findAllCustomerStaffs(nickname, PageRequest.of(page, size));
+        Page<HangzhouCustomerStaff> customerStaffs = customerStaffService.findAllCustomerStaffs(nickname, updatedTime, PageRequest.of(page, size));
 
         return Result.success(customerStaffs);
     }
 
     @GetMapping("/updated")
-    public Result<List<HangzhouCustomerStaffRespVO>> getCustomerStaffsByUpdatedTime(@RequestParam ("updatedTime") Long updatedTime) {
-        Date updatedTimeForQuery = new Date(updatedTime);
-        List<HangzhouCustomerStaff> customerStaffs = customerStaffService.findCustomerStaffsByUpdatedTime(updatedTimeForQuery);
+    public Result<List<HangzhouCustomerStaffRespVO>> getCustomerStaffsByUpdatedTime(@RequestParam ("updatedTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedTime) {
+
+        List<HangzhouCustomerStaff> customerStaffs = customerStaffService.findCustomerStaffsByUpdatedTime(updatedTime);
 
         return Result.success(HangzhouCustomerStaffConverter.INSTANCE.convertListResp(customerStaffs));
     }
+
+
+    @GetMapping("/updated/count")
+    public Result<Long> getCustomerStaffsCountByUpdatedTime(@RequestParam ("updatedTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedTime)  {
+        List<HangzhouCustomerStaff> customerStaffs = customerStaffService.findCustomerStaffsByUpdatedTime(updatedTime);
+
+        return Result.success((long) customerStaffs.size());
+    }
+
+
 
 }

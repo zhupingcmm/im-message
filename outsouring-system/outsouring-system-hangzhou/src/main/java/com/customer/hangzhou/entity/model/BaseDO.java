@@ -1,14 +1,17 @@
 package com.customer.hangzhou.entity.model;
 
 import com.customer.hangzhou.listener.BaseListener;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @EntityListeners(BaseListener.class)
 @MappedSuperclass
 public class BaseDO  implements Serializable {

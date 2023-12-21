@@ -1,5 +1,6 @@
 package com.customer.hangzhou.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.customer.hangzhou.entity.HangzhouCustomerStaff;
 import com.customer.hangzhou.repository.HangzhouCustomerStaffRepository;
 import com.customer.hangzhou.service.HangzhouCustomerStaffService;
@@ -22,10 +23,12 @@ public class HangzhouCustomerStaffServiceImpl implements HangzhouCustomerStaffSe
 
     private final HangzhouCustomerStaffRepository hangzhouCustomerStaffRepository;
     @Override
-    public Page<HangzhouCustomerStaff> findAllCustomerStaffs(String nickname, PageRequest pageRequest) {
+    public Page<HangzhouCustomerStaff> findAllCustomerStaffs(String nickname, Date updateTime, PageRequest pageRequest) {
         Specification<HangzhouCustomerStaff> spec = Specification.where(null);
         if (StringUtils.isNoneBlank(nickname)){
              spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("nickname"), nickname));
+        } else if (ObjectUtil.isNotEmpty(updateTime)) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("updatedAt"), updateTime));
         }
 
         return hangzhouCustomerStaffRepository.findAll(spec, pageRequest);
@@ -33,7 +36,7 @@ public class HangzhouCustomerStaffServiceImpl implements HangzhouCustomerStaffSe
 
     @Override
     public List<HangzhouCustomerStaff> findCustomerStaffsByUpdatedTime(Date updatedTime) {
-        return hangzhouCustomerStaffRepository.findByUpdatedAtAfter(updatedTime);
+        return hangzhouCustomerStaffRepository.findByUpdatedAtGreaterThanOrEqual(updatedTime);
     }
 
     @Override

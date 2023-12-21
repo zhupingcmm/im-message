@@ -27,7 +27,7 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/customer_system?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://192.168.61.3:3306/customer_system?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
           username: root
           password: 1234
 mybatis-plus:
@@ -42,3 +42,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       # 逻辑删除字面值：删除为1
       logic-delete-value: 1
+
+myapp:
+  system:
+    page: 20

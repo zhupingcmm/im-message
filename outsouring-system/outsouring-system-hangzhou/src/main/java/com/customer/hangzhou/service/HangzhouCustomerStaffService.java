@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface HangzhouCustomerStaffService {
 
-    Page<HangzhouCustomerStaff> findAllCustomerStaffs(String nickname, PageRequest pageRequest);
+    Page<HangzhouCustomerStaff> findAllCustomerStaffs(String nickname, Date updateTime, PageRequest pageRequest);
 
     List<HangzhouCustomerStaff> findCustomerStaffsByUpdatedTime(Date updatedTime);
 

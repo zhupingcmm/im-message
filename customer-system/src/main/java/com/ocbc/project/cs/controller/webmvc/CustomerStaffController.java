@@ -7,7 +7,6 @@ import com.ocbc.project.cs.service.ICustomerStaffService;
 import com.ocbc.project.infrastructure.vo.Result;
 import lombok.AllArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,7 +34,13 @@ public class CustomerStaffController {
         val customerStaffRespVO = CustomerStaffConverter.INSTANCE.convert2CustomerStaffRespVO(customerStaff);
 
         return Result.success(customerStaffRespVO);
+    }
 
+    @GetMapping("/sync/{systemid}")
+    public Result<String> syncDataFromOutSystem(@PathVariable(value = "systemid") String systemId){
+
+        customerStaffService.syncOutsourcingCustomerStaffsBySystemId(systemId);
+        return Result.error("Sync date from out system");
     }
 
 
