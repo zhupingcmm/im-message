@@ -8,6 +8,8 @@ public class PhoneFilter extends AbstractCustomerStaffFiler {
     @Override
     public CustomerStaff execute(CustomerStaff customerStaff) {
         if (StringUtils.isEmpty(customerStaff.getPhone())) return null;
+
+        if (getNext() != null) return getNext().execute(customerStaff);
         return customerStaff;
     }
 }

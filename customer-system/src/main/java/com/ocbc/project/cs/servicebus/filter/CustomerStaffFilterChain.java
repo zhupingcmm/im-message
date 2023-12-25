@@ -1,6 +1,5 @@
 package com.ocbc.project.cs.servicebus.filter;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.ocbc.project.cs.entity.CustomerStaff;
 import com.ocbc.project.cs.servicebus.filter.impl.DummyFilter;
 import com.ocbc.project.cs.servicebus.filter.impl.PhoneFilter;
@@ -19,20 +18,17 @@ public class CustomerStaffFilterChain {
     private CustomerStaffFiler addFilter(CustomerStaffFiler ...customerStaffFilers) {
 
         CustomerStaffFiler dummyFilter = new DummyFilter();
+        CustomerStaffFiler next = dummyFilter;
 
         for (CustomerStaffFiler customerStaffFiler : customerStaffFilers) {
-            dummyFilter.addFilter(customerStaffFiler);
+            next = next.addFilter(customerStaffFiler);
         }
 
         return dummyFilter.getNext();
     }
 
-
-
-
     public CustomerStaff execute(CustomerStaff customerStaff) {
         if (chain == null) return null;
-
         return chain.execute(customerStaff);
     }
 

@@ -9,6 +9,6 @@ public class StaffNameFilter extends AbstractCustomerStaffFiler {
     public CustomerStaff execute(CustomerStaff customerStaff) {
         if (ObjectUtil.isEmpty(customerStaff.getStaffName())) return null;
         if (getNext() != null) return getNext().execute(customerStaff);
-        return null;
+        return customerStaff;
     }
 }

@@ -11,7 +11,8 @@ public abstract class AbstractCustomerStaffFiler implements CustomerStaffFiler{
         return next;
     }
 
-    public void addFilter(CustomerStaffFiler customerFiler){
+    public CustomerStaffFiler addFilter(CustomerStaffFiler customerFiler){
         this.next = customerFiler;
+        return this.next;
     }
 }

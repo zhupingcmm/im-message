@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +28,8 @@ public class CustomerStaffServiceImpl extends ServiceImpl<CustomerStaffMapper, C
     private final IOutsourcingSystemService outsourcingSystemService;
 
     private final CustomerStaffEndpoint customerStaffEndpoint;
+
+    private final ThreadPoolExecutor threadPoolExecutor;
 
 
     @Override
@@ -89,7 +92,9 @@ public class CustomerStaffServiceImpl extends ServiceImpl<CustomerStaffMapper, C
 
     @Override
     public void syncOutsourcingCustomerStaffsBySystemId(String systemId) {
-      OutsourcingSystem outsourcingSystem =  outsourcingSystemService.findBySystemId(systemId);
-      customerStaffEndpoint.fetchCustomerStaffs(outsourcingSystem);
+        threadPoolExecutor.execute(() -> {
+            OutsourcingSystem outsourcingSystem =  outsourcingSystemService.findBySystemId(systemId);
+            customerStaffEndpoint.fetchCustomerStaffs(outsourcingSystem);
+        });
     }
 }

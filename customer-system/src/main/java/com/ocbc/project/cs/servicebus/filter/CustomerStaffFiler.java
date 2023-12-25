@@ -7,7 +7,7 @@ public interface CustomerStaffFiler {
 
      CustomerStaffFiler getNext();
 
-    void addFilter(CustomerStaffFiler customerFiler);
+    CustomerStaffFiler addFilter(CustomerStaffFiler customerFiler);
 
     CustomerStaff execute(CustomerStaff customerStaff);
 

@@ -1,5 +1,7 @@
 package com.ocbc.project.cs.servicebus.endpoint.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ocbc.project.cs.entity.CustomerStaff;
 import com.ocbc.project.cs.entity.tenant.OutsourcingSystem;
@@ -39,16 +41,26 @@ public class CustomerStaffEndpointImpl extends ServiceImpl<CustomerStaffMapper, 
 
         Integer counts = router.fetchOutsourcingSystemCustomerStaffCount(getStaffCountUrl(outsourcingSystem));
 
-        int nums = counts / pageSize;
+        int nums = 0;
+        if (counts > pageSize) {
+            nums = counts / pageSize;
 
-        int result = counts % pageSize;
-        if (result != 0) {
-            nums = nums + 1;
+            int result = counts % pageSize;
+            if (result != 0) {
+                nums = nums + 1;
+            }
         }
 
         for (int i = 0; i<= nums; i++) {
             List<CustomerStaff> customerStaffs =  routerContext.fetchOutsourcingSystemCustomerStaff(i, pageSize, getStaffUrl(outsourcingSystem));
-            List<CustomerStaff> customerStaffList = customerStaffs.stream().map(filterChain::execute).collect(Collectors.toList());
+            List<CustomerStaff> customerStaffList = customerStaffs.stream()
+                    .map(filterChain::execute).filter(ObjectUtil::isNotEmpty)
+                    .collect(Collectors.toList());
+            if (CollectionUtil.isEmpty(customerStaffList)) {
+                log.error("No data need to save to DB");
+                continue;
+            }
+
             this.saveBatch(customerStaffList);
         }
 
