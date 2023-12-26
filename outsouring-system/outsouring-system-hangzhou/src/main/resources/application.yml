@@ -17,6 +17,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
   kafka:
-    bootstrap-servers: 192.168.61.3:9092
-    consumer:
-      group-id: 1
+    producer:
+      acks: -1
+    bootstrap-servers: 192.168.61.3:9092, 192.168.61.3:9092

@@ -30,6 +30,14 @@ spring:
           url: jdbc:mysql://192.168.61.3:3306/customer_system?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
           username: root
           password: 1234
+  kafka:
+    bootstrap-servers: 192.168.61.3:9092, 192.168.61.3:9092
+    consumer:
+      group-id: 1
+      max-poll-records: 200
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual
 mybatis-plus:
   mapper-locations: classpath:mapperXml/*.xml
   configuration:

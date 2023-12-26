@@ -1,7 +1,9 @@
 package com.customer.hangzhou.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson2.JSON;
 import com.customer.hangzhou.entity.HangzhouCustomerStaff;
+import com.customer.hangzhou.kafka.KafkaProducer;
 import com.customer.hangzhou.repository.HangzhouCustomerStaffRepository;
 import com.customer.hangzhou.service.HangzhouCustomerStaffService;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.Optional;
 public class HangzhouCustomerStaffServiceImpl implements HangzhouCustomerStaffService {
 
     private final HangzhouCustomerStaffRepository hangzhouCustomerStaffRepository;
+
+    private final KafkaProducer kafkaProducer;
     @Override
     public Page<HangzhouCustomerStaff> findAllCustomerStaffs(String nickname, Date updateTime, PageRequest pageRequest) {
         Specification<HangzhouCustomerStaff> spec = Specification.where(null);
@@ -41,6 +45,7 @@ public class HangzhouCustomerStaffServiceImpl implements HangzhouCustomerStaffSe
 
     @Override
     public HangzhouCustomerStaff createCustomerStaff(HangzhouCustomerStaff customerStaff) {
+        kafkaProducer.sendMessage("hangzhou", JSON.toJSONString(customerStaff));
         return hangzhouCustomerStaffRepository.save(customerStaff);
     }
 
