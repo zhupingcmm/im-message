@@ -17,7 +17,7 @@ public class ServerIdleHandler extends IdleStateHandler {
 
     @Override
     protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
-        logger.warn(HEAT_BEAT_TIME + "内没有收到心跳，关闭连接");
+        logger.warn(HEAT_BEAT_TIME + "s 内没有收到心跳，关闭连接");
 
         ctx.channel().close();
     }

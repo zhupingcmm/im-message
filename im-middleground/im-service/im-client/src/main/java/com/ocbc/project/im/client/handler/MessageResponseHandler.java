@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponsePacket> {
     private static Logger logger = LoggerFactory.getLogger(MessageResponseHandler.class);
     private MessageResponseHandler () {}
-    public static MessageResponseHandler instance;
+    public static volatile MessageResponseHandler instance;
 
     public static MessageResponseHandler getInstance() {
         if (instance == null) {

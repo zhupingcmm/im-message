@@ -25,9 +25,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<HeartBeatPacke
         return instance;
     }
 
-    private HeartBeatHandler () {
-
-    }
+    private HeartBeatHandler () {}
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HeartBeatPacket msg) throws Exception {
         logger.info("收到心跳包: {}", JSON.toJSONString(msg));

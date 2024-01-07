@@ -15,7 +15,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     private static final Logger logger = LoggerFactory.getLogger(LoginResponseHandler.class);
     private LoginResponseHandler() {}
 
-    public static LoginResponseHandler instance;
+    public static volatile LoginResponseHandler instance;
 
     public static LoginResponseHandler getInstance() {
         if (instance == null) {
