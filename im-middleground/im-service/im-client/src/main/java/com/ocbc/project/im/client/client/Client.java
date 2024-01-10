@@ -39,12 +39,12 @@ public class Client {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ServerIdleHandler());
+//                        ch.pipeline().addLast(new ServerIdleHandler());
                         ch.pipeline().addLast(PacketCodecHandler.getInstance());
-                        ch.pipeline().addLast(new ClientIdleHandler());
-                        ch.pipeline().addLast(new LoginHandler(userid,username, password));
+//                        ch.pipeline().addLast(new ClientIdleHandler());
+                        ch.pipeline().addLast(new LoginHandler(userid,username));
                         ch.pipeline().addLast(LoginResponseHandler.getInstance());
-                        ch.pipeline().addLast(MessageResponseHandler.getInstance());
+//                        ch.pipeline().addLast(MessageResponseHandler.getInstance());
                     }
                 });
 

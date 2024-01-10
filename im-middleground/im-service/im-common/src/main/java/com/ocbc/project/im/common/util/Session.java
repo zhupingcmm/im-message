@@ -8,5 +8,5 @@ import lombok.Data;
 public class Session {
     private String userId;
     private String userName;
-    private String password;
+//    private String password;
 }

@@ -35,8 +35,8 @@ public class Server {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new ServerIdleHandler());
                         ch.pipeline().addLast(PacketCodecHandler.getInstance());
-                        ch.pipeline().addLast(HeartBeatHandler.getInstance());
                         ch.pipeline().addLast(LoginRequestHandler.getInstance());
+                        ch.pipeline().addLast(HeartBeatHandler.getInstance());
                         ch.pipeline().addLast(MessageRequestHandler.getInstance());
                     }
                 });
@@ -48,7 +48,7 @@ public class Server {
                     logger.info("server started! using port {} " , port);
                 }else {
                     logger.info("server start failed! using port {} " , port);
-                    channelFuture.cause().printStackTrace();
+//                    channelFuture.cause().printStackTrace();
                     System.exit(0);
                 }
             }

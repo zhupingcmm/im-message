@@ -33,10 +33,10 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {
 
         if (msg.isSuccess()) {
-            logger.info("登陆成功");
+            logger.info("Login success");
             LoginUtil.markAsLogin(ctx.channel());
         } else {
-            logger.warn("登陆失败： {}", JSON.toJSONString(msg));
+            logger.warn("Login failed： {}", JSON.toJSONString(msg));
         }
     }
 }

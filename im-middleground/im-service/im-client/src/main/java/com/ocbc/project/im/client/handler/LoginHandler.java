@@ -9,20 +9,17 @@ public class LoginHandler extends ChannelInboundHandlerAdapter {
 
     private String username;
 
-    private String password;
-
-    public LoginHandler(String userid, String username, String password) {
+    public LoginHandler(String userid, String username) {
         this.userid = userid;
         this.username = username;
-        this.password = password;
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        //构建登录对象，发起登录操作
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         loginRequestPacket.setUserId(this.userid);
         loginRequestPacket.setUserName(this.username);
-        loginRequestPacket.setPassword(this.password);
 
         ctx.channel().writeAndFlush(loginRequestPacket);
     }
