@@ -13,6 +13,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,8 @@ public class Server {
                     }
                 });
         ChannelFuture future = bootstrap.bind(port);
+
+
         future.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture channelFuture) throws Exception {
@@ -48,7 +52,7 @@ public class Server {
                     logger.info("server started! using port {} " , port);
                 }else {
                     logger.info("server start failed! using port {} " , port);
-//                    channelFuture.cause().printStackTrace();
+                    channelFuture.cause().printStackTrace();
                     System.exit(0);
                 }
             }

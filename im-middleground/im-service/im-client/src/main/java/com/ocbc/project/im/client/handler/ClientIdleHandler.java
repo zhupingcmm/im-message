@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class ClientIdleHandler extends IdleStateHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientIdleHandler.class);
-    public static final int HEAT_BEAT_TIME = 30;
+    public static final int HEAT_BEAT_TIME = 10;
     public ClientIdleHandler() {
         super(0, 0, HEAT_BEAT_TIME);
     }
