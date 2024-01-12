@@ -1,11 +1,9 @@
 server:
   port: 9002
-    
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"  
+
+im:
+  userid: "100"
+  username: zp
 
 spring:
   application:

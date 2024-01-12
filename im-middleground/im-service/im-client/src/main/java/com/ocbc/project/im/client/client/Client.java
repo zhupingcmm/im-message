@@ -4,6 +4,7 @@ import com.ocbc.project.im.client.service.ClientService;
 import com.ocbc.project.im.client.service.impl.ClientServiceImpl;
 import com.ocbc.project.im.common.dto.IMLoginRequest;
 import com.ocbc.project.im.common.dto.IMServerInfo;
+import org.springframework.beans.factory.annotation.Value;
 
 public class Client {
 
@@ -11,11 +12,9 @@ public class Client {
 
     private static final String ROUTE_PORT = "9003";
 
-    private static final String userid = "100";
 
-    private static final String username = "zp";
 
-    public static void start() {
+    public void start(String userid, String username) {
         ClientService clientService = new ClientServiceImpl();
 
         // get im server info
