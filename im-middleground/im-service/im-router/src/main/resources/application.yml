@@ -7,9 +7,19 @@ management:
       exposure:
         include: "*"  
 
+
 spring:
   application:
     name: im-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.61.3:3306/im_router?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 1234
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:
     level:
